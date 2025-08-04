@@ -102,6 +102,11 @@ on:
         description: "是否启用添加更多的ZRAM算法？"
         required: true
         default: false
+      SCX:
+        type: boolean
+        description: "是否启用风驰游戏引擎？"
+        required: true
+        default: true
 
 jobs:
   build:
@@ -330,8 +335,9 @@ jobs:
               echo "CONFIG_ZRAM_WRITEBACK=y" >> "$CONFIG_FILE"
             fi
           fi
+          
       - name: Add the SCX
-        if: ${{ inputs.enable_feature_z }}
+        if: ${{ github.event.inputs.SCX }}
         run: |
          cd kernel_workspace/kernel_platform/
          git clone https://github.com/HanKuCha/sched_ext.git

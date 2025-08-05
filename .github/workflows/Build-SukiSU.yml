@@ -234,6 +234,14 @@ jobs:
             echo '完成LZ4KD补丁'
           fi
 
+      - name: Add the SCX
+        run: |
+         cd kernel_workspace/kernel_platform/
+         git clone https://github.com/HanKuCha/sched_ext.git
+         cp -r ./sched_ext/* ./common/kernel/sched
+         rm -rf ./sched_ext/.git
+         cd common/kernel/sched
+
       # 配置信息
       - name: Add Configuration Settings
         run: |
@@ -331,13 +339,6 @@ jobs:
             fi
           fi
           
-      - name: Add the SCX
-        run: |
-         cd kernel_workspace/kernel_platform/
-         git clone https://github.com/HanKuCha/sched_ext.git
-         cp -r ./sched_ext/* ./common/kernel/sched
-         rm -rf ./sched_ext/.git
-         cd common/kernel/sched
          
       - name: Build kernel
         if: ${{ github.event.inputs.CPU == 'sm8650' || github.event.inputs.CPU == 'sm7675' }}
